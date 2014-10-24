@@ -3,6 +3,11 @@ CrownHackHour
 
 A repository for the Hack Hour at Crown
 
+https://github.com/argodev/codemash-speakers/tree/master/api
+
+* Speakers TODO needs update
+* Session TODO needs update
+
 Getting Started
 ===============
 
