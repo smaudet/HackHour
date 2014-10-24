@@ -1,7 +1,7 @@
-CrownHackHour
-=============
+HackHour
+========
 
-A repository for the Hack Hour at Crown
+A repository for the Hack Hour
 
 https://github.com/argodev/codemash-speakers/tree/master/api
 
