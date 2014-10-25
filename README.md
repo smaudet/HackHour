@@ -19,6 +19,8 @@ Getting Started
 
 Example API Request
 ===================
+
+```
 0:  {
 Id: "a02a0671-98a9-4365-a7b5-b963c6b4b046"
 FirstName: "Joseph"
@@ -30,6 +32,7 @@ GitHubLink: null
 LinkedInProfile: null
 BlogUrl: null
 }
+```
 
 Common APIs
 ===========
