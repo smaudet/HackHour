@@ -52,6 +52,6 @@ Resource Assignment
 * Gravatar - Tyler R.
 * LinkedIn - ?
 * Github - ?
-* Twitter - ?
+* Twitter - Tyler K.
 * AJAX library replacement for jQuery - Tim
 * Core - Sebastian
