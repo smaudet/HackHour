@@ -19,4 +19,7 @@ Common APIs
 * https://github.com/mbostock/d3/wiki
 * http://requirejs.org/docs/api.html
 
+Architecture Overview
+=====================
 
+![Arch Image](https://raw.githubusercontent.com/smaudet/HackHour/CodemashAPI/images/HackHourCodeMash.png)
