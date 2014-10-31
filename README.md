@@ -23,3 +23,13 @@ Architecture Overview
 =====================
 
 ![Arch Image](https://raw.githubusercontent.com/smaudet/HackHour/CodemashAPI/images/HackHourCodeMash.png)
+
+Resource Assignment
+===================
+
+* Gravatar - Tyler R.
+* LinkedIn - ?
+* Github - ?
+* Twitter - ?
+* AJAX library replacement for jQuery - ?
+* Core - Sebastian
