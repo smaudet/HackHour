@@ -31,5 +31,5 @@ Resource Assignment
 * LinkedIn - ?
 * Github - ?
 * Twitter - ?
-* AJAX library replacement for jQuery - ?
+* AJAX library replacement for jQuery - Tim
 * Core - Sebastian
