@@ -4,8 +4,11 @@ define(function(require){
   var Class = require('klass');
   var AjaxCall = {
     dataObj : null,
+    callbackFnc : function(d) {
+      this.dataObj = d;
+    },
     codeMashFinished : function(d,stat,jqxhr){
-      console.log("done")
+      console.log("done");
       this.dataObj = d;
       this.handleStat(stat);
       this.handleJQXHR(jqxhr);
@@ -25,16 +28,15 @@ define(function(require){
     performGet : function() { throw new Error("Pure Virtual Function");},
     ajaxCall : function(url) {
       $.ajax({
-         'url':url
-        ,'context':document.body
+        'url':url
+        ,'context':this
         ,'success':this.codeMashFinished
-//        ,'timeout': 1000
         ,'type': 'GET'
         ,'complete':this.codeMashComplete
         ,'accepts': 'application/json'
         ,'async': this.isAsync()
         ,'processData': false
-        ,'dataType':'jsonp'
+        ,'dataType':'json'
         ,'global': false
       });
     }
