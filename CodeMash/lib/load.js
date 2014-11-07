@@ -12,9 +12,15 @@ requirejs.config({
     ,angular:'angular-1.3.0.min'
     ,handlebars:'handlebars-v2.0.0'
     ,masonry:'masonry-3.1.5.pkgd.min'
-    ,prototype:'prototype-1.7.2.0'
+    //currently incompatible
+    //,prototype:'prototype-1.7.2.0'
+    ,klass:'klass.min'
+    ,extendjs:'extend.min'
     ,underscore:'underscore-1.7.0-min'
     ,jquery:'jquery-2.1.1.min'
+    ,AjaxLib:'AjaxLib'
+    ,taffy:'taffy-min'
+    ,codemash:'codeMashLibrary'
     //FIXME add testing framework
     //    ,jasmine:'
     ,simple:'simpleTest'
