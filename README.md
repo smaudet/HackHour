@@ -5,6 +5,10 @@ A repository for the Hack Hour
 
 https://github.com/argodev/codemash-speakers/tree/master/api
 
+Google Groups discussion:
+
+https://groups.google.com/forum/#!topic/codemash/ilc0-wSJagg
+
 * Speakers TODO needs update
 * Session TODO needs update
 
