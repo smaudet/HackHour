@@ -7,10 +7,23 @@ define(function(require){
 
   var speakers = new codemash.CodeMashSpeakers();
   var sessions = new codemash.CodeMashSessions();
+  speakers.callback = visFunc;
   speakers.performGet();
   sessions.performGet();
   window.speakers = speakers;
   window.sessions = sessions;
+
+  function visFunc(){
+    //start the visualization
+    d3.select("body").style("background-color","black");
+    d3.selectAll("p").style("color","blue")
+      .data(speakers.getFullNames())
+      .enter()
+      .append("p").style("color","white")
+      .text(function(d){return d});
+  }
+
+  
   
 //  s.sayHello('Person');
   //var sObj = new s.MyClass(2);

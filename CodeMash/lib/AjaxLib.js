@@ -4,14 +4,16 @@ define(function(require){
   var Class = require('klass');
   var AjaxCall = {
     dataObj : null,
-    callbackFnc : function(d) {
-      this.dataObj = d;
+    callback : function(){},
+    callbackFnc : function() {
+      this.callback();
     },
     codeMashFinished : function(d,stat,jqxhr){
       console.log("done");
       this.dataObj = d;
       this.handleStat(stat);
       this.handleJQXHR(jqxhr);
+      this.callbackFnc();
     },
     handleStat : function(stat) {
       console.log(stat);

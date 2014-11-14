@@ -11,8 +11,15 @@ define(function(require){
     //using Prototype convenience functions
     ,CodeMashSpeakers : AjaxCall.extend({
       curl : 'https://cmprod-speakers.azurewebsites.net/api/speakersdata'
-      ,getFullName : function() {
-        //TODO
+      ,getFullName : function(record) {
+        var name = '';
+        name+=record['FirstName'];
+        name+=' ';
+        name+=record['LastName'];
+        return name;
+      }
+      ,getFullNames : function(){
+        return this.dataObj.map(this.getFullName,this);
       }
       ,performGet : function() {
         this.ajaxCall(this.curl);
@@ -22,10 +29,14 @@ define(function(require){
     ,CodeMashSessions : AjaxCall.extend({
       curl : 'https://cmprod-speakers.azurewebsites.net/api/sessionsdata'
       ,sessionsByStart : function(){
-        //TODO
+        return this.dataObj.sort(function(a,b){
+          return Date.parse(a['SessionStartTime']) < Date.parse(b['SessionStartTime']);
+        });
       }
       ,sessionsByEnd : function(){
-        //TODO
+        return this.dataObj.sort(function(a,b){
+          return Date.parse(a['SessionStopTime']) < Date.parse(b['SessionStopTime']);
+        });
       }
       ,performGet : function() {
         this.ajaxCall(this.curl);
