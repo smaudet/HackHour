@@ -11,6 +11,7 @@ define(function(require){
     //using Prototype convenience functions
     ,CodeMashSpeakers : AjaxCall.extend({
       curl : 'https://cmprod-speakers.azurewebsites.net/api/speakersdata'
+      ,speakers : null
       ,getFullName : function(record) {
         var name = '';
         name+=record['FirstName'];
@@ -24,10 +25,14 @@ define(function(require){
       ,performGet : function() {
         this.ajaxCall(this.curl);
       }
+      ,setSpeakers : function(s) {
+        this.speakers = s;
+      }
     })
     //using Prototype convenience functions
     ,CodeMashSessions : AjaxCall.extend({
       curl : 'https://cmprod-speakers.azurewebsites.net/api/sessionsdata'
+      ,sessions: null
       ,sessionsByStart : function(){
         return this.dataObj.sort(function(a,b){
           return Date.parse(a['SessionStartTime']) < Date.parse(b['SessionStartTime']);
@@ -37,6 +42,9 @@ define(function(require){
         return this.dataObj.sort(function(a,b){
           return Date.parse(a['SessionStopTime']) < Date.parse(b['SessionStopTime']);
         });
+      }
+      ,setSessions : function(s) {
+        this.sessions = s; 
       }
       ,performGet : function() {
         this.ajaxCall(this.curl);

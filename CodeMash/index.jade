@@ -4,9 +4,7 @@ html(lang="en")
     meta(charset="utf-8")
     //entry-point is main.js, lib/load.js handles loading using require.js
     script(data-main="lib/load",type='text/javascript',src='lib/require.js',charset="utf-8")
+    link(rel="stylesheet",type="text/css",href="main.css")
   body
-    p hello world
-    div(class="d3div")
-      p one
-      p two
-      p three
+    div(class="speakers")
+    div(class="sessions")
