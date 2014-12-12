@@ -2,7 +2,7 @@
         };
         var todoApp = angular.module("todoApp", []);
         todoApp.run(function ($http) {
-            $http.get("https://cmprod-speakers.azurewebsites.net/api/sessionsdata").success(function (data) {
+            $http.get("sessionsData.json").success(function (data) {
                 model.sessions = data;
             });
         });

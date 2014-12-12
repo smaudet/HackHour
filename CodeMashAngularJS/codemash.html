@@ -16,11 +16,19 @@
         <table class="table table-striped">
             <thead>
                 <th>Title</th>
-                <th>Type</th>
+                <th width="50px">Type</th>
             </thead>
             <tbody>
                 <tr ng-repeat="session in codemash.sessions | orderBy:'id'">
-                    <td>{{session.Title}}</td>
+                    <td>
+						<div><input type="checkbox" ng_model="session.showDetail">{{session.Title}}</div>
+						<div ng-show="session.showDetail">
+							<table class="table">
+								<tr><td>Id</td><td>{{session.Id}}</td></tr>
+								<tr><td>Abstract</td><td>{{session.Abstract}}</td></tr>
+							</table>
+						</div>
+					</td>
                     <td>{{session.SessionType}}</td>
                 </tr>
             </tbody>
