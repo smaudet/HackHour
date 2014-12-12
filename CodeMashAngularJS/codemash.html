@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html data-ng-app="todoApp">
+<head>
+    <title>Codemash</title>
+    <link href="bootstrap.css" rel="stylesheet" />
+    <script src="angular.js"></script>
+	<script src="codemash.js"></script>
+</head>
+<body ng-controller="ToDoCtrl">
+    <div class="page-header">
+        <h1>
+            Codemash Sessions
+        </h1>
+    </div>
+    <div class="panel">
+        <table class="table table-striped">
+            <thead>
+                <th>Title</th>
+                <th>Type</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="session in codemash.sessions | orderBy:'id'">
+                    <td>{{session.Title}}</td>
+                    <td>{{session.SessionType}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
