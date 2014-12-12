@@ -24,6 +24,7 @@ requirejs.config({
     //FIXME add testing framework
     //    ,jasmine:'
     ,simple:'simpleTest'
+	,datalib:'coords'
   }
 });
 

@@ -4,6 +4,10 @@ define(function(require){
   var s = require('simple');
   var d3 = require('d3');
   var codemash = require('codemash');
+  var dataLib = require('datalib');
+  
+  console.log(dataLib.data.Zambezi.upleft.y);
+  dataLib.data;
 
   var speakers = new codemash.CodeMashSpeakers();
   var sessions = new codemash.CodeMashSessions();
