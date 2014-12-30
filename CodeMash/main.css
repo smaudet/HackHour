@@ -1,7 +1,42 @@
+
+body {
+    background-color:blue
+}
+
 .circleBox {
-    border-radius:40px;
-    border:2px solid blue;
-    padding:5px;
-    margin:10px;
-    display:inline-block;
+    border-radius: 40px;
+    border-top: solid rgb(255, 174, 0);
+    /* border: 2px solid blue; */
+    padding: 18px;
+    margin: 10px;
+    display: inline-block;
+    color: white;
+    max-width: 150px;
+    background-color: rgba(154, 157, 155, 0.9);
+}
+
+.title {
+    margin: auto;
+    color: white;
+    font-weight: bold;
+    padding-bottom: 12px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+    border-bottom: solid 2px rgb(255, 174, 0);
+}
+
+.speakerSect {
+    color: white;
+}
+
+.circleBox2 {
+    border-radius: 40px;
+    /* border: 2px solid red; */
+    padding: 10px;
+    margin: 20px;
+    display: inline-block;
+    background-color: rgb(255, 174, 0);
+    color: rgb(152, 22, 155);
+    font-size: 11px;
 }

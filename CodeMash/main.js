@@ -1,4 +1,4 @@
-console.log("hello world from main")
+console.log("hello world from main");
 define(function(require){
   var $ = require('jquery');
   var s = require('simple');
@@ -15,32 +15,52 @@ define(function(require){
   window.speakers = speakers;
   window.sessions = sessions;
 
-  // sessions.setSpeakers(speakers);
-  // speakers.setSessions(sessions);
-  speakers.callback = speakerVisFunc;
-  sessions.callback = sessionVisFunc;
-  // speakers.callback = speakersDone;
-  // sessions.callback = sessionsDone;
-  // var speakerDef = $.Deferred().then(function(){console.log("speakers Done")});
-  // var sessionDef = $.Deferred().then(function(){console.log("sessions Done")});
+  sessions.setSpeakers(speakers);
+  speakers.setSessions(sessions);
+  // speakers.callback = speakerVisFunc;
+  // sessions.callback = sessionVisFunc;
+  speakers.callback = speakersDone;
+  sessions.callback = sessionsDone;
+  var speakersDef = new $.Deferred();
+  var sessionsDef = new $.Deferred();
+  speakersDef.then(function(){console.log("speakers Done")});
+  sessionsDef.then(function(){console.log("sessions Done")});
 
-  // $.when(speakerDef,sessionDef).then(function(){
-  //   d3.select("body").transition().duration(1000).style("background-color","black");
-  //   d3.select("#speakers").style("color","blue")
-  //     .data(sessions.dataObj)
-  //     .append("div").attr("class","circleBox").html(function(session){
-  //       //Create the session/speaker pair
-        
-  //       });
+  // $.when(speakerDef).then(function(){
+  //   d3.select('#speakers').
   // });
 
-  // function speakersDone(){
-  //   speakerDef.resolve()
-  // }
+  var fadeColor = "black";
 
-  // function sessionsDone() {
-  //   sessionsDef.resolve()
-  // }
+  $.when(speakersDef,sessionsDef).then(function(){
+    d3.select("body").transition().duration(1000).style("background-color",fadeColor);
+    var sessionBox = d3.select(".sessions").style("color","blue");
+    var titleAndSpkr = sessions.getTitlesAndSpeakers();
+    var sess = sessionBox.selectAll("div");
+    sess = sess.data(titleAndSpkr).enter()
+      .append("div").attr("class","circleBox")
+      .html("<div class='title'></div><div class='speakerSect'></div>");
+    var titles = sess.select(".title");
+    titles.text(function(d){
+        return d.title;
+    });
+    var speak = sess.selectAll(".speakerSect div");
+    speak = speak.data(function(d){
+      return d.speakers.map(function(speaker){
+        return speaker.FirstName + " " + speaker.LastName;
+      });
+    });
+    speak.enter().append("div").attr("class","circleBox2").text(function(d){return d;});
+
+  });
+
+  function speakersDone(){
+    speakersDef.resolve();
+  }
+
+  function sessionsDone() {
+    sessionsDef.resolve();
+  }
 
   //Plain vis
   function speakerVisFunc(){
@@ -68,13 +88,5 @@ define(function(require){
       .attr("class","circleBox").style("color","white")
       .text(function(d){return d.Title});
   }
-
-  
-  
-//  s.sayHello('Person');
-  //var sObj = new s.MyClass(2);
-  //sObj.someProp=5;
-  //var res = sObj.someFunc(4);
-//  $('p').text("Hello From RequireJS: "+res);
   
 });

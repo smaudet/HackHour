@@ -11,7 +11,7 @@ define(function(require){
     //using Prototype convenience functions
     ,CodeMashSpeakers : AjaxCall.extend({
       curl : 'https://cmprod-speakers.azurewebsites.net/api/speakersdata'
-      ,speakers : null
+      ,sessions : null
       ,getFullName : function(record) {
         var name = '';
         name+=record['FirstName'];
@@ -25,14 +25,14 @@ define(function(require){
       ,performGet : function() {
         this.ajaxCall(this.curl);
       }
-      ,setSpeakers : function(s) {
-        this.speakers = s;
+      ,setSessions : function(s) {
+        this.sessions = s;
       }
     })
     //using Prototype convenience functions
     ,CodeMashSessions : AjaxCall.extend({
       curl : 'https://cmprod-speakers.azurewebsites.net/api/sessionsdata'
-      ,sessions: null
+      ,speakers: null
       ,sessionsByStart : function(){
         return this.dataObj.sort(function(a,b){
           return Date.parse(a['SessionStartTime']) < Date.parse(b['SessionStartTime']);
@@ -43,8 +43,15 @@ define(function(require){
           return Date.parse(a['SessionStopTime']) < Date.parse(b['SessionStopTime']);
         });
       }
-      ,setSessions : function(s) {
-        this.sessions = s; 
+      ,getTitleAndSpeaker : function(record){
+        var title = record['Title'];
+        return { 'title' : title, speakers : record['Speakers'] };
+      }
+      ,getTitlesAndSpeakers : function() {
+        return this.dataObj.map(this.getTitleAndSpeaker,this);
+      }
+      ,setSpeakers : function(s) {
+        this.speakers = s; 
       }
       ,performGet : function() {
         this.ajaxCall(this.curl);
