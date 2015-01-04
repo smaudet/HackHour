@@ -56,6 +56,9 @@ define(function(require){
       ,performGet : function() {
         this.ajaxCall(this.curl);
       }
+      ,getSessionsForSpeaker : function(speaker) {
+//        this.speakers;
+      }
     })
   };
 

@@ -33,24 +33,61 @@ define(function(require){
   var fadeColor = "black";
 
   $.when(speakersDef,sessionsDef).then(function(){
-    d3.select("body").transition().duration(1000).style("background-color",fadeColor);
-    var sessionBox = d3.select(".sessions").style("color","blue");
-    var titleAndSpkr = sessions.getTitlesAndSpeakers();
-    var sess = sessionBox.selectAll("div");
-    sess = sess.data(titleAndSpkr).enter()
-      .append("div").attr("class","circleBox")
-      .html("<div class='title'></div><div class='speakerSect'></div>");
-    var titles = sess.select(".title");
-    titles.text(function(d){
-        return d.title;
-    });
-    var speak = sess.selectAll(".speakerSect div");
-    speak = speak.data(function(d){
-      return d.speakers.map(function(speaker){
-        return speaker.FirstName + " " + speaker.LastName;
+
+    var speakerSessionsMap = {};
+    sessions.dataObj.map(function(session){
+      session.Speakers.map(function(speaker){
+        if(speakerSessionsMap[speaker.Id] === undefined){
+          speakerSessionsMap[speaker.Id] = [];
+        }
+        speakerSessionsMap[speaker.Id].push(session);
       });
     });
-    speak.enter().append("div").attr("class","circleBox2").text(function(d){return d;});
+
+    
+    d3.select("body").transition().duration(1000).style("background-color",fadeColor);
+
+    //This is our sessions -> speakers mapping
+    
+    // var sessionBox = d3.select(".sessions").style("color","blue");
+    // var titleAndSpkr = sessions.getTitlesAndSpeakers();
+    // var sess = sessionBox.selectAll("div");
+    // sess = sess.data(titleAndSpkr).enter()
+    //   .append("div").attr("class","circleBox")
+    //   .html("<div class='title'></div><div class='speakerSect'></div>");
+    // var titles = sess.select(".title");
+    // titles.text(function(d){
+    //     return d.title;
+    // });
+    // var speak = sess.selectAll(".speakerSect div");
+    // speak = speak.data(function(d){
+    //   return d.speakers.map(function(speaker){
+    //     return speaker.FirstName + " " + speaker.LastName;
+    //   });
+    // });
+    // speak.enter().append("div").attr("class","circleBox2").text(function(d){return d;});
+
+    //This is our speakers -> sessions mapping
+    var speakerBox = d3.select(".speakers").style("color","blue");
+    var speak = speakerBox.selectAll("div");
+    speak = speak.data(speakers.dataObj).enter()
+          .append("div").attr("class","circleBox")
+          .html("<div class='title'></div><div class='sessionSect'></div>");
+    var titles = speak.select(".title");
+    titles.text(function(speaker){
+      //d is the name
+      return speaker['FirstName']+" "+speaker['LastName'];
+    });
+    
+    //Select the set of nested divs under sessionSect
+    var sess = speak.selectAll(".sessionSect div");
+    sess = sess.data(function(speaker){
+      return speakerSessionsMap[speaker.Id];
+    });
+    sess.enter().append("div").attr("class","circleBox2")
+      .text(function(session){
+        return session.Title;
+      });
 
   });
 
