@@ -6,8 +6,8 @@ define(function(require){
   var codemash = require('codemash');
   var dataLib = require('datalib');
   
-  console.log(dataLib.data.Zambezi.upleft.y);
-  dataLib.data;
+  // console.log(dataLib.data.Zambezi.upleft.y);
+  // dataLib.data;
 
   var speakers = new codemash.CodeMashSpeakers();
   var sessions = new codemash.CodeMashSessions();
@@ -72,26 +72,44 @@ define(function(require){
     // speak.enter().append("div").attr("class","circleBox2").text(function(d){return d;});
 
     //This is our speakers -> sessions mapping
-    var speakerBox = d3.select(".speakers").style("color","blue");
-    var speak = speakerBox.selectAll("div");
-    speak = speak.data(speakers.dataObj).enter()
-          .append("div").attr("class","circleBox")
-          .html("<div class='title'></div><div class='sessionSect'></div>");
-    var titles = speak.select(".title");
-    titles.text(function(speaker){
-      //d is the name
-      return speaker['FirstName']+" "+speaker['LastName'];
-    });
+    // var speakerBox = d3.select(".speakers").style("color","blue");
+    // var speak = speakerBox.selectAll("div");
+    // speak = speak.data(speakers.dataObj).enter()
+    //       .append("div").attr("class","circleBox")
+    //       .html("<div class='title'></div><div class='sessionSect'></div>");
+    // var titles = speak.select(".title");
+    // titles.text(function(speaker){
+    //   //d is the name
+    //   return speaker['FirstName']+" "+speaker['LastName'];
+    // });
     
-    //Select the set of nested divs under sessionSect
-    var sess = speak.selectAll(".sessionSect div");
-    sess = sess.data(function(speaker){
-      return speakerSessionsMap[speaker.Id];
+    // //Select the set of nested divs under sessionSect
+    // var sess = speak.selectAll(".sessionSect div");
+    // sess = sess.data(function(speaker){
+    //   return speakerSessionsMap[speaker.Id];
+    // });
+    // sess.enter().append("div").attr("class","circleBox2")
+    //   .text(function(session){
+    //     return session.Title;
+    //   });
+
+    //This is our sessions -> rooms mapping
+    var mapBase = d3.select('.map');
+    var mapChart = mapBase.append("canvas")
+        .attr("width",640).attr("height",480);
+    var ctxt = mapChart.node().getContext("2d");
+    var bogusData = [1,2,3,4,5];
+
+    var scale = d3.scale.linear();
+    scale = scale.range([10,390]).domain([1,23]);
+
+    bogusData.forEach(function(d,i){
+      ctxt.beginPath();
+      ctxt.rect(scale(d),150,10,10);
+      ctxt.fillStyle='blue';
+      ctxt.fill();
+      ctxt.closePath();
     });
-    sess.enter().append("div").attr("class","circleBox2")
-      .text(function(session){
-        return session.Title;
-      });
 
   });
 
