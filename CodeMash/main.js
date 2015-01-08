@@ -32,6 +32,122 @@ define(function(require){
 
   var fadeColor = "black";
 
+  var base = d3.select("#vis");
+  var chart = base.append("canvas")
+              .attr("width", 640)
+              .attr("height", 480);
+  
+  var context = chart.node().getContext("2d");
+
+  //This holds our data
+  var dataContainer = base.append("custom");
+
+  var mouseX = 0;
+  var mouseY = 0;
+
+  var checkMouse = function(x,y,w,h){
+    if(mouseX > x && mouseX < x+w){
+      if(mouseY > y && mouseY < y+h){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  var drawCanvas = function() {
+    
+    // clear canvas
+    context.fillStyle = "#fff";
+    context.rect(0,0,chart.attr("width"),chart.attr("height"));
+    context.fill();
+    
+    var elements = dataContainer.selectAll("custom.rect");
+    elements.each(function(d) {
+      var node = d3.select(this);
+      
+      context.beginPath();
+      context.fillStyle = node.attr("fillStyle");
+      var x = Number(node.attr("x"));
+      var y = Number(node.attr("y"));
+      var w = Number(node.attr("size"));
+      var h = w;
+      if(checkMouse(x,y,w,h)){
+        //dirty hack...
+        if(node.attr("wasOver") !== "true"){
+          node.attr("wasOver",true);
+          this.dispatchEvent( new MouseEvent("mouseenter", {
+            bubbles: true,
+            cancelable: true,
+            view: window
+          })); 
+        }
+
+        this.dispatchEvent( new MouseEvent("mouseover", {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        }));
+      } else if(node.attr("wasOver") === "true") {
+        //dirty hack...
+        node.attr("wasOver",false);
+        this.dispatchEvent( new MouseEvent("mouseleave", {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        }));
+      }
+      context.rect(x,y,w,h);
+      context.fill();
+      context.closePath();
+      
+    });
+  }
+
+  var drawCustom = function(data){
+    var scale = d3.scale.linear()
+                .range([10, 390])
+                .domain(d3.extent(data));
+    
+    var dataBinding = dataContainer.selectAll("custom.rect")
+                      .data(data, function(d) { return d; });
+    
+    dataBinding
+      .attr("size", 8)
+      .transition()
+      .duration(1000)
+      .attr("size", 15)
+      .attr("fillStyle", "green")
+
+    dataBinding.on("mouseenter",function(d,i){
+        var n = d3.select(this);
+        n.attr("size", 25);
+        n.attr("x",n.attr("x")-5);
+        n.attr("y",n.attr("y")-5);
+      }).on("mouseleave",function(d,i){
+        var n = d3.select(this);
+        n.attr("size", 15);
+        var nx = Number(n.attr("x"))+5;
+        var ny = Number(n.attr("y"))+5;
+        n.attr("x",nx);
+        n.attr("y",ny);
+      });
+
+    dataBinding.enter()
+      .append("custom")
+      .classed("rect", true)
+      .attr("x", scale)
+      .attr("y", 100)
+      .attr("size", 8)
+      .attr("fillStyle", "red");
+    
+    dataBinding.exit()
+      .attr("size", 8)
+      .transition()
+      .duration(1000)
+      .attr("size", 5)
+      .attr("fillStyle", "lightgrey");
+  }
+
   $.when(speakersDef,sessionsDef).then(function(){
 
     var speakerSessionsMap = {};
@@ -45,7 +161,8 @@ define(function(require){
     });
 
     
-    d3.select("body").transition().duration(1000).style("background-color",fadeColor);
+    d3.select("body").transition().duration(1000)
+    .style("background-color",fadeColor);
 
     //This is our sessions -> speakers mapping
     
@@ -68,27 +185,45 @@ define(function(require){
     // speak.enter().append("div").attr("class","circleBox2").text(function(d){return d;});
 
     //This is our speakers -> sessions mapping
-    var speakerBox = d3.select(".speakers").style("color","blue");
-    var speak = speakerBox.selectAll("div");
-    speak = speak.data(speakers.dataObj).enter()
-          .append("div").attr("class","circleBox")
-          .html("<div class='title'></div><div class='sessionSect'></div>");
-    var titles = speak.select(".title");
-    titles.text(function(speaker){
-      //d is the name
-      return speaker['FirstName']+" "+speaker['LastName'];
-    });
+    // var speakerBox = d3.select(".speakers").style("color","blue");
+    // var speak = speakerBox.selectAll("div");
+    // speak = speak.data(speakers.dataObj).enter()
+    //       .append("div").attr("class","circleBox")
+    //       .html("<div class='title'></div><div class='sessionSect'></div>");
+    // var titles = speak.select(".title");
+    // titles.text(function(speaker){
+    //   //d is the name
+    //   return speaker['FirstName']+" "+speaker['LastName'];
+    // });
     
-    //Select the set of nested divs under sessionSect
-    var sess = speak.selectAll(".sessionSect div");
-    sess = sess.data(function(speaker){
-      return speakerSessionsMap[speaker.Id];
-    });
-    sess.enter().append("div").attr("class","circleBox2")
-      .text(function(session){
-        return session.Title;
-      });
+    // //Select the set of nested divs under sessionSect
+    // var sess = speak.selectAll(".sessionSect div");
+    // sess = sess.data(function(speaker){
+    //   return speakerSessionsMap[speaker.Id];
+    // });
+    // sess.enter().append("div").attr("class","circleBox2")
+    //   .text(function(session){
+    //     return session.Title;
+    //   });
 
+    //This is our canvas api
+    d3.timer(drawCanvas);
+    drawCustom([1,2,13,20,23]);
+ 
+    // uncomment this, to see the transition~
+    drawCustom([1,2,12,16,20]);
+
+    var canv = $("#vis canvas")[0];
+    canv.addEventListener("mousemove", function(e) {
+      mouseX = e.offsetX;
+      mouseY = e.offsetY;
+      // mouseX = e.clientX;
+      // mouseY = e.clientY; 
+      // console.log(mouseX+" "+mouseY);
+    });
+    canv.addEventListener("mousedown",function(e){
+      console.log(e.offsetX+" "+e.offsetY);
+    });
   });
 
   function speakersDone(){
