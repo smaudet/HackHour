@@ -10,7 +10,7 @@ define(function(require){
     ,callOne : function() {}
     //using Prototype convenience functions
     ,CodeMashSpeakers : AjaxCall.extend({
-      curl : 'https://cmprod-speakers.azurewebsites.net/api/speakersdata'
+       curl : 'https://cmprod-speakers.azurewebsites.net/api/speakersdata'
       ,sessions : null
       ,getFullName : function(record) {
         var name = '';
@@ -23,7 +23,26 @@ define(function(require){
         return this.dataObj.map(this.getFullName,this);
       }
       ,performGet : function() {
+        if(this.readCache()) {
+          //Fire the callback for triggering purposes
+          this.callbackFnc();
+          return;
+        }
+        //Else run the network call
         this.ajaxCall(this.curl);
+      }
+      ,internalCb : function() {
+        //persist the data to localStorage
+        console.log("calling persist routine");
+        localStorage.setItem("cachedSpeakers",JSON.stringify(this.dataObj));
+      }
+      ,readCache : function() {
+        var o = JSON.parse(localStorage.getItem("cachedSpeakers"));
+        if(o !== undefined && o!== null){
+          this.dataObj = o;
+          return true;
+        }
+        return false;
       }
       ,setSessions : function(s) {
         this.sessions = s;
@@ -54,7 +73,26 @@ define(function(require){
         this.speakers = s; 
       }
       ,performGet : function() {
+        if(this.readCache()) {
+          //Fire the callback for triggering purposes
+          this.callbackFnc();
+          return;
+        }
+        //Else run the network call
         this.ajaxCall(this.curl);
+      }
+      ,internalCb : function() {
+        //persist the data to localStorage
+        console.log("calling persist routine");
+        localStorage.setItem("cachedSessions",JSON.stringify(this.dataObj));
+      }
+      ,readCache : function() {
+        var o = JSON.parse(localStorage.getItem("cachedSessions"));
+        if(o !== undefined && o!== null){
+          this.dataObj = o;
+          return true;
+        }
+        return false;
       }
       ,getSessionsForSpeaker : function(speaker) {
 //        this.speakers;

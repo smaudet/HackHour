@@ -6,5 +6,25 @@ html(lang="en")
     script(data-main="lib/load",type='text/javascript',src='lib/require.js',charset="utf-8")
     link(rel="stylesheet",type="text/css",href="main.css")
   body
-    div(class="speakers")
-    div(class="sessions")
+    div#panel
+      div#nav
+        ul
+          li
+            a#d1 Day 1
+          li
+            a#d2 Day 2
+          li
+            a#d3 Day 3
+          li
+            a#d4 Day 4
+          li
+            a#d5 Day 5
+          li
+            a#map Map
+    div#pres
+      div(class="speakers")
+      div(class="sessions")
+    div#control
+      input(id="tgglBttn",type="button",name="Toggle",value="Toggle")
+      input(id="filterBttn",type="button",name="Filter",value="Fitler")
+      div#desc
