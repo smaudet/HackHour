@@ -1,6 +1,78 @@
 
 body {
-    background-color:blue
+    background-color:blackd
+}
+
+#panel {
+    position: fixed;
+    top: 0px;
+    background: rgb(173, 165, 128);
+    margin:0;
+    height: 36pt;
+    width:100%;
+    left: 0px;
+}
+
+#pres {
+    margin-top:36pt;
+}
+
+#nav {
+    text-align:center;
+    margin:0 auto;
+    height: 100%;
+    background-color: aliceblue;
+}
+
+#nav ul{
+    list-style:none;
+    margin:0 auto;
+    line-height: 1;
+}
+
+#nav li {
+    display: inline-block;
+    line-height:1;
+}
+
+#nav li a {
+    display: inline-block;
+    padding: 0 2.7em;
+    height: 2.6em;
+    margin: 0;
+    line-height: 2.6em;
+}
+
+#nav li a:hover {
+    background-color: cadetblue;
+}
+
+#pres {
+    float:left;
+    width:80%;
+    height:100%;
+}
+
+#control {
+    float:right;
+    width:20%;
+    height:100%;
+    position:fixed;
+    margin-top:36pt;
+    top:0px;
+    right:0px;
+}
+
+#desc {
+    color:white;
+}
+
+#tgglBttn {
+    top:0px;
+}
+
+.circleBox.selected {
+    background-color: rgba(169, 174, 93, 0.9)
 }
 
 .circleBox {

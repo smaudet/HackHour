@@ -5,11 +5,13 @@ define(function(require){
   var AjaxCall = {
     dataObj : null,
     callback : function(){},
+    internalCb : function(){},
     callbackFnc : function() {
       this.callback();
+      this.internalCb();
     },
     codeMashFinished : function(d,stat,jqxhr){
-      console.log("done");
+      // console.log("done");
       this.dataObj = d;
       this.handleStat(stat);
       this.handleJQXHR(jqxhr);
@@ -22,8 +24,8 @@ define(function(require){
       console.log(jqxhr);
     },
     codeMashComplete : function(jqxhr,stat){
-      console.log("complete");
-      console.log(stat);
+      // console.log("complete");
+      // console.log(stat);
       //noop
     },
     isAsync : function() { return true; },
