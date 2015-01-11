@@ -7,7 +7,6 @@ define(function(require){
   var dataLib = require('datalib');
   
   // console.log(dataLib.data.Zambezi.upleft.y);
-  // dataLib.data;
 
   var speakers = new codemash.CodeMashSpeakers();
   var sessions = new codemash.CodeMashSessions();
@@ -30,9 +29,7 @@ define(function(require){
 
   sessions.setSpeakers(speakers);
   speakers.setSessions(sessions);
-  // speakers.callback = speakerVisFunc;
-  // sessions.callback = sessionVisFunc;
-
+  
   function speakersDone(){
     speakersDef.resolve();
   }
@@ -46,7 +43,7 @@ define(function(require){
   var selStr = localStorage.getItem("selectedIds");
   
   var selectedIds;
-  if(selStr === undefined || selStr === ""){
+  if(selStr === undefined || selStr === "" || selStr === "null"){
    selectedIds = []; 
   } else {
    selectedIds = JSON.parse(selStr);
